@@ -1,6 +1,9 @@
 import React from 'react'
+import { getCookie } from '../../helper/cookie'
 
 const Home = () => {
+  const token = getCookie('token');
+  console.log(token)
   return (
     <>
       <div>
