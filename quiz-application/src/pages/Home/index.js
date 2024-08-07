@@ -1,12 +1,24 @@
 import React from 'react'
 import { getCookie } from '../../helper/cookie'
-
+import './style.css'
 const Home = () => {
   const token = getCookie('token');
-  console.log(token)
   return (
     <>
-      <div>
+      {token && (
+        <div>
+          <h2>
+            Chuc mung ban da dang nhap thanh cong
+          </h2>
+          <div className='btn__practice'>
+            <button>Danh sach chu de on tap</button>
+            <button>Danh sach bai da luyen tap</button>
+          </div>
+          <hr />
+        </div>
+      )}
+      <div className='introduction'>
+
         <div>
           Website trắc nghiệm online lập trình Frontend là một nền tảng trực tuyến cho phép các lập trình viên Frontend thực hiện các bài kiểm tra, trắc nghiệm, đánh giá và đo đạc kiến thức của mình trong lĩnh vực lập trình Frontend.
         </div>

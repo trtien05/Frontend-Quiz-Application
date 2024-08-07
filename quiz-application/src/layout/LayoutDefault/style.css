@@ -15,51 +15,19 @@ a{
   text-decoration: none;
   color: white;
 }
-
-.header__menu {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  align-items: center;
+.header__menu a{
+  margin: 0 20px;
+  padding: 15px;
 }
-
-.header__menu>li {
-  margin-left: 20px;
-  position: relative;
-}
-
-.header__menu>li a {
-  color: black;
-  font-weight: 600;
-  font-size: 18px;
-}
-
-.header__menu>li a.active {
-  color: #fff;
-}
-
-.header__menu-sub {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  min-width: 200px;
+.header__menu a:hover {
   background-color: orangered;
-  display: none;
 }
-
-.header__menu-sub li {
-  padding: 10px;
-  border-bottom: 1px solid black;
+.header__menu .active{
+  background-color: orangered;
 }
-
-.header__menu>li:hover .header__menu-sub {
-  display: inline-block;
+.authentication a:first-child{
+  margin-right: 20px;
 }
-
 .main {
   padding: 0 40px;
   margin: 40px 0;

@@ -1,5 +1,5 @@
 // Login.js
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./style.css"; // Import the CSS file
 import { login } from "../../services/userService";
 import { setCookie } from "../../helper/cookie";

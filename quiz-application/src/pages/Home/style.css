@@ -1,0 +1,20 @@
+.btn__practice button{
+  background-color: white;
+  padding: 5px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+.btn__practice button:hover {
+  color: white;
+  background-color: orange;
+}
+.btn__practice{
+  margin: 20px 0;
+}
+.btn__practice button:first-child {
+  margin-right: 10px;
+
+}
+.introduction{
+  margin: 20px 0;
+}
