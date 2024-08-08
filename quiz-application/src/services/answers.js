@@ -6,7 +6,7 @@ export const getAnswersList = async () => {
 }
 
 export const getAnswers = async (id) => {
-  const response = await get(`/answers/${id}`);
+  const response = await get(`/answers?id=${id}`);
   return response
 }
 

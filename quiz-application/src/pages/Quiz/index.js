@@ -57,31 +57,34 @@ const Quiz = () => {
       topicId: id
     }
 
-
+    let answerCorrect = 0;
 
     // Handle answers
     const answerList = questions.map((question, index) => {
       const value = formData.get(`answer${index + 1}`);
-
+      const numericValue = parseInt(value, 10);
+      if (numericValue === question.correctAnswer) {
+        answerCorrect += 1;
+      }
       return {
         questionId: question.id,
-        answer: value
+        answer: numericValue
       };
     });
+    const answerWrong = questions.length - answerCorrect;
 
     //Add answers
     const updatedAnswers = {
       ...answers,
       answers: answerList
     }
-    console.log(updatedAnswers)
     try {
       const response = await createAnswers(updatedAnswers);
       if (!response) {
         alert('That bai')
       } else {
         alert('Thanh cong')
-        navigate(`/result/${id}`)
+        navigate(`/result/${response.id}`, { state: { questions, answerWrong, answerCorrect, titleQuestion } })
 
       }
     } catch (error) {
@@ -104,6 +107,7 @@ const Quiz = () => {
                 {question.answers.map((answer, answerIndex) => (
                   <Fragment key={answerIndex}>
                     <input
+                      required
                       type="radio"
                       name={`answer${index + 1}`}
                       id={`question${index + 1}_answer${answerIndex}`}
