@@ -1,4 +1,4 @@
-import { get } from "../utils/request"
+import { get, post } from "../utils/request"
 
 export const getAnswersList = async () => {
   const response = await get('/answers');
@@ -7,5 +7,10 @@ export const getAnswersList = async () => {
 
 export const getAnswers = async (id) => {
   const response = await get(`/answers/${id}`);
+  return response
+}
+
+export const createAnswers = async (options) => {
+  const response = await post(`/answers`, options);
   return response
 }

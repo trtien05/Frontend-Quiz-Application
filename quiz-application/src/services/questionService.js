@@ -5,7 +5,7 @@ export const getQuestionList = async () => {
   return response
 }
 
-export const getQuestion = async (id) => {
-  const response = await get(`/questions/${id}`);
+export const getQuestionTopicId = async (id) => {
+  const response = await get(`/questions?topicId=${id}`);
   return response
 }

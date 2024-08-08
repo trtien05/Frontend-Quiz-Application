@@ -1,0 +1,16 @@
+.title__question{
+  margin: 10px 0;
+  font-size: 18px;
+}
+.answers{
+  margin-left: 10px;
+}
+.answers input{
+  margin-right: 15px;
+}
+.question__item{
+  margin: 15px 0;
+}
+.btn__submit{
+  width: 30%;
+}

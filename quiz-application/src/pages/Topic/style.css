@@ -1,0 +1,28 @@
+.table__topic{
+    border-collapse: collapse;
+  border: 1px solid #dddddd;
+  width: 80%;
+  margin-top: 20px;
+}
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 10px;
+  text-align: center;
+}
+
+button {
+  background-color: white;
+  padding: 5px 20px;
+  width: 50%;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  color: black;
+}
+
+button:hover {
+  color: white;
+  background-color: orange;
+  
+}
