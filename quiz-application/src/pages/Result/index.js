@@ -39,7 +39,6 @@ const Result = () => {
       <div className='result__list'>
         {questions.map((question, index) => {
           const userAnswer = answers.find(answer => answer.questionId === question.id)?.answer;
-          console.log(userAnswer)
           return (
             <div key={index} className='question__item'>
               <div className='title__question'>
@@ -53,7 +52,6 @@ const Result = () => {
                 {question.answers.map((answer, answerIndex) => {
                   const isCorrectAnswer = answerIndex === question.correctAnswer;
                   const isUserAnswer = answerIndex === userAnswer;
-                  const isAnswerSelected = userAnswer !== null;
 
                   return (
                     <Fragment key={answerIndex}>
