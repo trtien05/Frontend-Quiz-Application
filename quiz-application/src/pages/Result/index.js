@@ -1,24 +1,26 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom';
-import { getAnswers } from '../../services/answers';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import { getAnswersById } from '../../services/answers';
 import './style.css'
 const Result = () => {
   const { id } = useParams();
   const location = useLocation();
   const [answers, setAnswers] = useState([]);
-  const { questions, answerWrong, answerCorrect, titleQuestion } = location.state;
-
+  const [answersId, setAnswersId] = useState(null);
+  const navigation = useNavigate();
+  const { questions, answerWrong, answerCorrect, titleQuestion, numericId } = location.state;
+  console.log(numericId);
   useEffect(() => {
     const fetchAnswers = async () => {
       try {
-        const response = await getAnswers(id);
+        const response = await getAnswersById(id);
         if (!response) {
           throw new Error('No answers available');
         } else {
           // Tìm đối tượng `answers` dựa trên `id` từ URL
           const userAnswersData = response.find(item => item.id === parseInt(id));
           setAnswers(userAnswersData.answers)
-
+          setAnswersId(response[0].id);
         }
       } catch (error) {
         console.log(error.message);
@@ -26,10 +28,13 @@ const Result = () => {
     };
     fetchAnswers();
   }, [id]);
+  console.log(answersId);
 
   const percentCorrect = (answerCorrect / questions.length) * 100
 
-
+  const handleBack = () => {
+    navigation(`/quiz/${numericId}`, { state: { answersId } });
+  }
   return (
     <>
       <h2>Kết quả chủ đề: {titleQuestion}</h2>
@@ -72,7 +77,6 @@ const Result = () => {
                             : isUserAnswer
                               ? 'incorrect'
                               : ''
-
                         }
                       >
                         {answer}
@@ -87,7 +91,10 @@ const Result = () => {
             </div>
           );
         })}
+        <button className='btn__submit' type='submit' onClick={handleBack}>Try Again</button>
+
       </div>
+
     </>
   )
 }

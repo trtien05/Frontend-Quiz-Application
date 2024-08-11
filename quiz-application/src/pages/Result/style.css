@@ -33,3 +33,6 @@
 .incorrect{
   color: red;
 }
+.btn__submit {
+  width: 30%;
+}
