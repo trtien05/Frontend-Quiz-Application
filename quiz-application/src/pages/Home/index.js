@@ -11,8 +11,13 @@ const Home = () => {
             Chuc mung ban da dang nhap thanh cong
           </h2>
           <div className='btn__practice'>
-            <button>Danh sach chu de on tap</button>
-            <button>Danh sach bai da luyen tap</button>
+            <a href="/topic" style={{ textDecoration: 'none' }}>
+              <button>Danh sach chu de on tap</button>
+
+            </a>
+            <a href="/answers" style={{ textDecoration: 'none' }}>
+              <button>Danh sach bai da luyen tap</button>
+            </a>
           </div>
           <hr />
         </div>
