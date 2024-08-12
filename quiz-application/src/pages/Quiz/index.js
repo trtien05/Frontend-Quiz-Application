@@ -1,16 +1,13 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getQuestionTopicId } from '../../services/questionService';
 import './style.css';
 import { getCookie } from '../../helper/cookie';
-import { createAnswers, editAnswers, getAnswersById } from '../../services/answers';
+import { createAnswers } from '../../services/answers';
 
 const Quiz = () => {
   const { id } = useParams();
   const numericId = parseInt(id, 10);
-  const location = useLocation();
-  const { answersId } = location.state;
-  console.log(answersId)
 
   const navigate = useNavigate();
   let titleQuestion = " ";
@@ -33,49 +30,33 @@ const Quiz = () => {
   }
 
   const [questions, setQuestions] = useState([]);
-  const [answersObj, setAnswersObj] = useState([]);
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
-        const [questionsResponse, answersResponse] = await Promise.all([
+        const [questionsResponse] = await Promise.all([
           getQuestionTopicId(id),
-          getAnswersById(answersId)
         ]);
         if (!questionsResponse) {
           throw new Error('No questions available');
         }
-        if (!answersResponse) {
-          throw new Error('No answers available');
-        }
-
-        setAnswersObj(answersResponse)
         setQuestions(questionsResponse);
-
       } catch (error) {
         console.log(error.message);
       }
     };
     fetchQuestion();
   }, [id]);
-  console.log(answersObj);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
 
-    let answers = null;
-    if (answersObj.length > 0) {
-      answers = {
-        id: answersId.toString(),
-        userId: getCookie('id'),
-        topicId: id
-      }
-    } else {
-      answers = {
-        id: Date.now().toString(),
-        userId: getCookie('id'),
-        topicId: id
-      }
+
+    const answers = {
+      id: Date.now().toString(),
+      userId: parseInt(getCookie('id'), 10),
+      topicId: numericId
     }
+    // }
 
     let answerCorrect = 0;
 
@@ -100,13 +81,7 @@ const Quiz = () => {
     }
 
     try {
-      let response = ''
-      if (answersObj.length > 0) {
-        console.log('cap nhat do nha')
-        response = await editAnswers(updatedAnswers);
-      } else {
-        response = await createAnswers(updatedAnswers);
-      }
+      const response = await createAnswers(updatedAnswers);
       if (!response) {
         alert('That bai')
       } else {

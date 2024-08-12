@@ -22,23 +22,29 @@ const Topic = () => {
     <>
       <h2>Danh sach chu de on luyen</h2>
       <div>
-        <table className='table__topic'>
-          <th>ID</th>
-          <th>Ten chu de</th>
-
-          {topic.map((item) => (
+        <table className="table__topic">
+          <thead>
             <tr>
-              <td>{item.id}</td>
-              <td>{item.name}</td>
-              <td>
-                <a href={`/quiz/${item.id}`} style={{ textDecoration: 'none' }}>
-                  <button>Làm bài</button>
-                </a>
-              </td>
+              <th>ID</th>
+              <th>Tên chủ đề</th>
+              <th>Actions</th>
             </tr>
-          ))}
-
+          </thead>
+          <tbody>
+            {topic.map((item, id) => (
+              <tr key={id}>
+                <td>{item.id}</td>
+                <td>{item.name}</td>
+                <td>
+                  <a href={`/quiz/${item.id}`} style={{ textDecoration: 'none' }}>
+                    <button>Làm bài</button>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
+
       </div>
 
     </>

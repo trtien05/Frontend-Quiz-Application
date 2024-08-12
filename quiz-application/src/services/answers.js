@@ -6,12 +6,17 @@ export const getAnswersList = async () => {
 }
 
 export const getAnswersById = async (id) => {
-  const response = await get(`/answers?id=${id}`);
+  const response = await get(`/answers/${id}`);
   return response
 }
 
 export const createAnswers = async (options) => {
   const response = await post(`/answers`, options);
+  return response
+}
+
+export const deleteAnswers = async (id) => {
+  const response = await del(`/answers/${id}`);
   return response
 }
 

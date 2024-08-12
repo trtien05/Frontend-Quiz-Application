@@ -1,39 +1,83 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { useLocation, useParams, useNavigate } from 'react-router-dom';
-import { getAnswersById } from '../../services/answers';
+import { useParams, useNavigate } from 'react-router-dom';
+import { deleteAnswers, getAnswersById } from '../../services/answers';
 import './style.css'
+import { getQuestionTopicId } from '../../services/questionService';
 const Result = () => {
   const { id } = useParams();
-  const location = useLocation();
   const [answers, setAnswers] = useState([]);
-  const [answersId, setAnswersId] = useState(null);
+  const [answersList, setAnswersList] = useState([]);
+
+  const [questions, setQuestions] = useState([]);
+
   const navigation = useNavigate();
-  const { questions, answerWrong, answerCorrect, titleQuestion, numericId } = location.state;
-  console.log(numericId);
+  let titleQuestion = '';
+  let answerCorrect = 0;
+
+  const answerWrong = questions.length - answerCorrect;
+
   useEffect(() => {
     const fetchAnswers = async () => {
       try {
-        const response = await getAnswersById(id);
-        if (!response) {
+        const answersResponse = await getAnswersById(id);
+        if (!answersResponse) {
           throw new Error('No answers available');
-        } else {
-          // Tìm đối tượng `answers` dựa trên `id` từ URL
-          const userAnswersData = response.find(item => item.id === parseInt(id));
-          setAnswers(userAnswersData.answers)
-          setAnswersId(response[0].id);
         }
+
+        const questionsResponse = await getQuestionTopicId(answersResponse.topicId)
+        if (!questionsResponse) {
+          throw new Error('No answers available');
+        }
+
+
+
+        setQuestions(questionsResponse)
+        setAnswersList(answersResponse)
+        setAnswers(answersResponse.answers)
+
       } catch (error) {
         console.log(error.message);
       }
     };
     fetchAnswers();
   }, [id]);
-  console.log(answersId);
 
+  switch (answersList.topicId) {
+    case 1:
+      titleQuestion = 'HTML5';
+      break;
+    case 2:
+      titleQuestion = 'CSS3';
+      break;
+    case 3:
+      titleQuestion = 'Javascript';
+      break;
+    case 4:
+      titleQuestion = 'ReactJS';
+      break;
+    default:
+      titleQuestion = 'Unknown';
+      break;
+  }
+  questions.forEach((question) => {
+    const userAnswer = answers.find((answer) => answer.questionId === question.id)?.answer;
+    if (userAnswer === question.correctAnswer) {
+      answerCorrect += 1;
+    }
+  });
   const percentCorrect = (answerCorrect / questions.length) * 100
 
-  const handleBack = () => {
-    navigation(`/quiz/${numericId}`, { state: { answersId } });
+  const handleBack = async () => {
+    try {
+      const response = await deleteAnswers(id);
+      if (!response) {
+        throw new Error('No answers available');
+      } else {
+        navigation(`/quiz/${answersList.topicId}`);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   }
   return (
     <>
